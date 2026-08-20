@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Abeja en Realidad Aumentada</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- A-Frame -->
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+
+    <!-- MindAR para detección de target -->
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+</head>
+
+<body>
+
+    <div id="status" class="status">Comprobando acceso a la cámara...</div>
+
+    <a-scene mindar-image="
+            imageTargetSrc: ./targets.mind;
+            autoStart: true;
+            uiLoading: yes;
+            uiScanning: yes;
+            uiError: yes;
+        " color-space="sRGB" renderer="colorManagement: true; physicallyCorrectLights: true" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: true">
+
+        <a-assets>
+
+            <!-- Modelo 3D de la abeja -->
+            <a-asset-item id="abeja" src="./abeja.glb">
+            </a-asset-item>
+
+        </a-assets>
+
+
+        <!-- Cámara -->
+        <a-camera position="0 0 0" look-controls="enabled: false">
+        </a-camera>
+
+
+        <!-- Target de realidad aumentada -->
+        <a-entity mindar-image-target="targetIndex: 0">
+
+            <!-- Luz -->
+            <a-light type="directional" intensity="1.5" position="1 2 2">
+            </a-light>
+
+            <!-- Luz ambiental -->
+            <a-light type="ambient" intensity="1">
+            </a-light>
+
+
+            <!-- Abeja 3D -->
+            <a-gltf-model id="modeloAbeja" src="#abeja" position="0 0 0.1" rotation="0 0 0" scale="0.5 0.5 0.5" animation="property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear">
+            </a-gltf-model>
+
+        </a-entity>
+
+    </a-scene>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
